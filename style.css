@@ -2,6 +2,16 @@ body {
     background-color: blue !important;
 }
 
+.quizcard {
+    width: 35rem;
+}
+
+.quizcard-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
 .container {
     min-height: 100vh;
     background-color: blue !important;
