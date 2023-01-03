@@ -58,3 +58,19 @@ function setupQuestion(currentQuestionNumber) {
     document.getElementById('answer3').innerHTML = questions[currentQuestionNumber]["answer3"];
     document.getElementById('answer4').innerHTML = questions[currentQuestionNumber]["answer4"];
 }
+
+function addCssToElement(id, cssProperty) {
+    getTagById(id).classList.add(cssProperty);
+}
+
+function removeCssFromElement(id, cssProperty) {
+    getTagById(id).classList.remove(cssProperty);
+}
+
+function selectAnswer(id, cssProperty) {
+    removeCssFromElement('questionCard1', 'active');
+    removeCssFromElement('questionCard2', 'active');
+    removeCssFromElement('questionCard3', 'active');
+    removeCssFromElement('questionCard4', 'active');
+    addCssToElement(id,cssProperty);
+}

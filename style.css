@@ -19,3 +19,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.questioncard:hover {
+    background-color: lightcyan;
+    cursor: pointer;
+}
+
+.active {
+    background-color: lightcyan;
+}
