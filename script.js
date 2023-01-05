@@ -84,7 +84,9 @@ function selectAnswer(id, cssProperty) {
     document.getElementById('nextQuestion-Button').classList.remove('disabled');
     currentQuestionNumber++;
     if(currentQuestionNumber == questions.length) {
-        getTagById('quizcard').innerHTML = generateConclusionHTML(correctAnswerCounter);
+        getTagById('endscreen').innerHTML = generateConclusionHTML(correctAnswerCounter);
+        removeCssFromElement('endscreen','d-none');
+        addCssToElement('quizcard', 'd-none');
     }
 }
 
@@ -139,19 +141,22 @@ function removeAllWrongAndCorrectMarkers() {
 function generateConclusionHTML(correctAnswerCounter) {
     if(correctAnswerCounter == questions.length) {
         return `
-        <h1>${correctAnswerCounter} von ${questions.length} sind korrekt!</h1>
+        <img src='img/trophy.png'>
+        <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du bist ein echter IT-Spezialist.</span>
     `;
     }
     if(correctAnswerCounter > questions.length*0.5) {
         return `
-        <h1>${correctAnswerCounter} von ${questions.length} sind korrekt!</h1>
+        <img src='img/trophy.png'>
+        <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du bist auf einem guten Weg zum IT-Spezialisten. Weiter so!</span>
     `;
     }
     if(correctAnswerCounter < questions.length*0.5) {
         return `
-        <h1>${correctAnswerCounter} von ${questions.length} sind korrekt!</h1>
+        <img src='img/trophy.png'>
+        <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du musst noch viel lernen. Versuch's nochmal!</span>
     `;
     }

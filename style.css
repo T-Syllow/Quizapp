@@ -37,3 +37,19 @@ body {
     max-height: 200px;
     object-fit: cover;
 }
+
+.d-none {
+    display: none;
+}
+
+#endscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#endscreen img {
+    height: 150px;
+    padding: 20px;
+}
