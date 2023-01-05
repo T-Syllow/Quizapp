@@ -17,7 +17,7 @@
     </nav>
 
 <div class="container">
-    <div class="card quizcard">
+    <div id="quizcard" class="card quizcard">
         <img src="img/questionmark.jpg" class="card-img-top titlePicture" alt="...">
         <div class="card-body">
           <h5 class="card-title" id="question">Question</h5>
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="quizcard-bottom">
-            <span><b>1</b> von <b id="maxQuestions"></b> Fragen</span>
+            <span><b id="currentQuestionCount"></b> von <b id="maxQuestions"></b> Fragen</span>
 
             <button type="button" id="nextQuestion-Button" class="btn btn-primary disabled" onclick="showNextQuestion()">nächste Frage</button>
           </div>

@@ -32,7 +32,7 @@ let questions = [
         "rightAnswer": 1
     },
     {
-        "question": "Was bildet das HTML Tag <h1></h1> ab?",
+        "question": 'Was bildet das HTML Tag h1 ab?',
         "answer1": "eine Hauptüberschrift",
         "answer2": "Hypertext Markup Language",
         "answer3": "Hypertext Markup Language",
@@ -41,9 +41,11 @@ let questions = [
     }
 ];
 let currentQuestionNumber = 0;
+let correctAnswerCounter = 0;
 
 function init() {
     getTagById('maxQuestions').innerText = questions.length;
+    getTagById('currentQuestionCount').innerText = currentQuestionNumber+1;
     setupQuestion(currentQuestionNumber);
 }
 
@@ -68,17 +70,22 @@ function removeCssFromElement(id, cssProperty) {
 }
 
 function selectAnswer(id, cssProperty) {
+    console.log("lol");
     if(getTagById(id).id.charAt(id.length - 1) == questions[currentQuestionNumber]["rightAnswer"]) {
         console.log(getTagById(id).id.charAt(id.length - 1));
         addCssToElement(id,cssProperty);
+        correctAnswerCounter++;
         disableAllAnswers();
     } else {
         addCssToElement(id,'wrong');
         disableAllAnswers();
         showRightAnswer();
     }
-    currentQuestionNumber ++;
     document.getElementById('nextQuestion-Button').classList.remove('disabled');
+    currentQuestionNumber++;
+    if(currentQuestionNumber == questions.length) {
+        getTagById('quizcard').innerHTML = generateConclusionHTML(correctAnswerCounter);
+    }
 }
 
 function disableAllAnswers() {
@@ -92,10 +99,60 @@ function disableAllAnswers() {
     getTagById('questionCard4').classList.remove('questioncard');
 }
 
+function enableAllAnswers() {
+    getTagById('questionCard1').setAttribute('onclick', "selectAnswer('questionCard1','correct')");
+    getTagById('questionCard2').setAttribute('onclick', "selectAnswer('questionCard2','correct')");
+    getTagById('questionCard3').setAttribute('onclick', "selectAnswer('questionCard3','correct')");
+    getTagById('questionCard4').setAttribute('onclick', "selectAnswer('questionCard4','correct')");
+    getTagById('questionCard1').classList.add('questioncard');
+    getTagById('questionCard2').classList.add('questioncard');
+    getTagById('questionCard3').classList.add('questioncard');
+    getTagById('questionCard4').classList.add('questioncard');
+}
+
 function showRightAnswer() {
     document.getElementById("questionCard"+questions[currentQuestionNumber]["rightAnswer"]).classList.add('correct');
 }
 
 function showNextQuestion() {
-    
+    if(currentQuestionNumber < questions.length) {
+        removeAllWrongAndCorrectMarkers();
+        init();
+        enableAllAnswers();
+        document.getElementById('nextQuestion-Button').classList.add('disabled');
+    } else {
+        getTagById('quizcard').innerHTML = generateConclusionHTML(correctAnswerCounter);
+    }
+}
+
+function removeAllWrongAndCorrectMarkers() {
+    getTagById('questionCard1').classList.remove('wrong');
+    getTagById('questionCard2').classList.remove('wrong');
+    getTagById('questionCard3').classList.remove('wrong');
+    getTagById('questionCard4').classList.remove('wrong');
+    getTagById('questionCard1').classList.remove('correct');
+    getTagById('questionCard2').classList.remove('correct');
+    getTagById('questionCard3').classList.remove('correct');
+    getTagById('questionCard4').classList.remove('correct');
+}
+
+function generateConclusionHTML(correctAnswerCounter) {
+    if(correctAnswerCounter == questions.length) {
+        return `
+        <h1>${correctAnswerCounter} von ${questions.length} sind korrekt!</h1>
+        <span>Du bist ein echter IT-Spezialist.</span>
+    `;
+    }
+    if(correctAnswerCounter > questions.length*0.5) {
+        return `
+        <h1>${correctAnswerCounter} von ${questions.length} sind korrekt!</h1>
+        <span>Du bist auf einem guten Weg zum IT-Spezialisten. Weiter so!</span>
+    `;
+    }
+    if(correctAnswerCounter < questions.length*0.5) {
+        return `
+        <h1>${correctAnswerCounter} von ${questions.length} sind korrekt!</h1>
+        <span>Du musst noch viel lernen. Versuch's nochmal!</span>
+    `;
+    }
 }
