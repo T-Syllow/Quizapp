@@ -144,20 +144,23 @@ function generateConclusionHTML(correctAnswerCounter) {
         <img src='img/trophy.png'>
         <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du bist ein echter IT-Spezialist.</span>
+        <button>neustarten</button>
     `;
     }
     if(correctAnswerCounter > questions.length*0.5) {
         return `
-        <img src='img/trophy.png'>
+        <img src='img/goodthumb.png'>
         <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du bist auf einem guten Weg zum IT-Spezialisten. Weiter so!</span>
+        <button>neustarten</button>
     `;
     }
     if(correctAnswerCounter < questions.length*0.5) {
         return `
-        <img src='img/trophy.png'>
+        <img src='img/gameover.png'>
         <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du musst noch viel lernen. Versuch's nochmal!</span>
+        <button>neustarten</button>
     `;
     }
 }
