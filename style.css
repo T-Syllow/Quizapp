@@ -1,5 +1,5 @@
 body {
-    background-color: blue !important;
+    background-color: rgba(117, 178, 216, 1) !important;
 }
 
 .quizcard {
@@ -14,7 +14,7 @@ body {
 
 .container {
     min-height: 100vh;
-    background-color: blue !important;
+    background-color: rgba(117, 178, 216, 1) !important;
     display: flex;
     justify-content: center;
     align-items: center;
