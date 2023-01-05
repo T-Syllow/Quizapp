@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-    min-height: 100vh;
+    margin-top: 50px;
     background-color: rgba(117, 178, 216, 1) !important;
     display: flex;
     justify-content: center;
@@ -25,6 +25,15 @@ body {
     cursor: pointer;
 }
 
-.active {
-    background-color: lightcyan;
+.correct {
+    background-color: rgb(18, 201, 42);
+}
+
+.wrong {
+    background-color: rgb(207, 56, 5);
+}
+
+.titlePicture {
+    max-height: 200px;
+    object-fit: cover;
 }

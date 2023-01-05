@@ -18,33 +18,33 @@
 
 <div class="container">
     <div class="card quizcard">
-        <img src="img/questionmark.jpg" class="card-img-top" alt="...">
+        <img src="img/questionmark.jpg" class="card-img-top titlePicture" alt="...">
         <div class="card-body">
           <h5 class="card-title" id="question">Question</h5>
           <div class="card mb-2">
-            <div class="card-body questioncard" id="questionCard1" onclick="selectAnswer('questionCard1','active')">
+            <div class="card-body questioncard" id="questionCard1" onclick="selectAnswer('questionCard1','correct')">
               <span id="answer1"></span> 
             </div>
           </div>
-          <div class="card  mb-2">
-            <div class="card-body questioncard" id="questionCard2" onclick="selectAnswer('questionCard2','active')">
+          <div class="card mb-2">
+            <div class="card-body questioncard" id="questionCard2" onclick="selectAnswer('questionCard2','correct')">
                 <span id="answer2"></span>
             </div>
           </div>
-          <div class="card  mb-2">
-            <div class="card-body questioncard" id="questionCard3" onclick="selectAnswer('questionCard3','active')">
+          <div class="card mb-2">
+            <div class="card-body questioncard" id="questionCard3" onclick="selectAnswer('questionCard3','correct')">
                 <span id="answer3"></span>
             </div>
           </div>
-          <div class="card  mb-2">
-            <div class="card-body questioncard" id="questionCard4" onclick="selectAnswer('questionCard4','active')">
+          <div class="card mb-2">
+            <div class="card-body questioncard" id="questionCard4" onclick="selectAnswer('questionCard4','correct')">
                 <span id="answer4"></span>
             </div>
           </div>
           <div class="quizcard-bottom">
             <span><b>1</b> von <b id="maxQuestions"></b> Fragen</span>
 
-            <button type="button" class="btn btn-primary">nächste Frage</button>
+            <button type="button" id="nextQuestion-Button" class="btn btn-primary disabled" onclick="showNextQuestion()">nächste Frage</button>
           </div>
         </div>
     </div>

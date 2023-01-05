@@ -68,9 +68,34 @@ function removeCssFromElement(id, cssProperty) {
 }
 
 function selectAnswer(id, cssProperty) {
-    removeCssFromElement('questionCard1', 'active');
-    removeCssFromElement('questionCard2', 'active');
-    removeCssFromElement('questionCard3', 'active');
-    removeCssFromElement('questionCard4', 'active');
-    addCssToElement(id,cssProperty);
+    if(getTagById(id).id.charAt(id.length - 1) == questions[currentQuestionNumber]["rightAnswer"]) {
+        console.log(getTagById(id).id.charAt(id.length - 1));
+        addCssToElement(id,cssProperty);
+        disableAllAnswers();
+    } else {
+        addCssToElement(id,'wrong');
+        disableAllAnswers();
+        showRightAnswer();
+    }
+    currentQuestionNumber ++;
+    document.getElementById('nextQuestion-Button').classList.remove('disabled');
+}
+
+function disableAllAnswers() {
+    getTagById('questionCard1').onclick = "";
+    getTagById('questionCard2').onclick = "";
+    getTagById('questionCard3').onclick = "";
+    getTagById('questionCard4').onclick = "";
+    getTagById('questionCard1').classList.remove('questioncard');
+    getTagById('questionCard2').classList.remove('questioncard');
+    getTagById('questionCard3').classList.remove('questioncard');
+    getTagById('questionCard4').classList.remove('questioncard');
+}
+
+function showRightAnswer() {
+    document.getElementById("questionCard"+questions[currentQuestionNumber]["rightAnswer"]).classList.add('correct');
+}
+
+function showNextQuestion() {
+    
 }
