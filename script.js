@@ -10,34 +10,34 @@ let questions = [
     {
         "question": "Wofür steht die Abkürzung SQL?",
         "answer1": "Structured Query Language",
-        "answer2": "Hypertext Markup Language",
-        "answer3": "Hypertext Markup Language",
-        "answer4": "Hypertext Markup Language",
+        "answer2": "Super Queue Local",
+        "answer3": "Science Queue Language",
+        "answer4": "Sausage Query League",
         "rightAnswer": 1
     },
     {
         "question": "Wofür steht die Abkürzung CSS?",
-        "answer1": "Cascading Style Sheet",
-        "answer2": "Hypertext Markup Language",
-        "answer3": "Hypertext Markup Language",
-        "answer4": "Hypertext Markup Language",
-        "rightAnswer": 1
+        "answer1": "Cheating Style Sheet",
+        "answer2": "Chess Style Sheet",
+        "answer3": "Cascading Style Sheet",
+        "answer4": "Critical Style Sheet",
+        "rightAnswer": 3
     },
     {
         "question": "Was ist ein Framework?",
         "answer1": "Ein Baukasten aus fertigen Designs und Funktionen",
-        "answer2": "Hypertext Markup Language",
-        "answer3": "Hypertext Markup Language",
-        "answer4": "Hypertext Markup Language",
+        "answer2": "Ein Rahmen, den man auf dem Bau zum herstellen von Fenstern benutzt",
+        "answer3": "Eine technische Komponente bei der Herstellung von Prozessoren",
+        "answer4": "Die Haut von Schlangen nach dem häuten",
         "rightAnswer": 1
     },
     {
         "question": 'Was bildet das HTML Tag h1 ab?',
-        "answer1": "eine Hauptüberschrift",
-        "answer2": "Hypertext Markup Language",
-        "answer3": "Hypertext Markup Language",
-        "answer4": "Hypertext Markup Language",
-        "rightAnswer": 1
+        "answer1": "eine Verlinkung auf eine andere Seite",
+        "answer2": "die Möglichkeit E-Mails zu schreiben",
+        "answer3": "einen Knopf zum drücken auf einer Website",
+        "answer4": "eine Hauptüberschrift",
+        "rightAnswer": 4
     }
 ];
 let currentQuestionNumber = 0;
@@ -70,9 +70,7 @@ function removeCssFromElement(id, cssProperty) {
 }
 
 function selectAnswer(id, cssProperty) {
-    console.log("lol");
     if(getTagById(id).id.charAt(id.length - 1) == questions[currentQuestionNumber]["rightAnswer"]) {
-        console.log(getTagById(id).id.charAt(id.length - 1));
         addCssToElement(id,cssProperty);
         correctAnswerCounter++;
         disableAllAnswers();
@@ -144,7 +142,7 @@ function generateConclusionHTML(correctAnswerCounter) {
         <img src='img/trophy.png'>
         <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du bist ein echter IT-Spezialist.</span>
-        <button>neustarten</button>
+        <button class="btn btn-primary mt-2" onclick="restartQuiz()">Neustarten</button>
     `;
     }
     if(correctAnswerCounter > questions.length*0.5) {
@@ -152,7 +150,7 @@ function generateConclusionHTML(correctAnswerCounter) {
         <img src='img/goodthumb.png'>
         <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du bist auf einem guten Weg zum IT-Spezialisten. Weiter so!</span>
-        <button>neustarten</button>
+        <button class="btn btn-primary mt-2" onclick="restartQuiz()">Neustarten</button>
     `;
     }
     if(correctAnswerCounter < questions.length*0.5) {
@@ -160,7 +158,17 @@ function generateConclusionHTML(correctAnswerCounter) {
         <img src='img/gameover.png'>
         <h1>${correctAnswerCounter} von ${questions.length} Antworten sind korrekt!</h1>
         <span>Du musst noch viel lernen. Versuch's nochmal!</span>
-        <button>neustarten</button>
+        <button class="btn btn-primary mt-2" onclick="restartQuiz()">Neustarten</button>
     `;
     }
+}
+
+function restartQuiz() {
+    currentQuestionNumber = 0;
+    correctAnswerCounter = 0;
+    removeCssFromElement('quizcard','d-none');
+    addCssToElement('endscreen', 'd-none');
+    removeAllWrongAndCorrectMarkers();
+    enableAllAnswers();
+    init();
 }
