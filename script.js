@@ -44,21 +44,25 @@ let currentQuestionNumber = 0;
 let correctAnswerCounter = 0;
 
 function init() {
+    setupQuestionCounter();
+    setupQuestion();
+}
+
+function setupQuestionCounter() {
     getTagById('maxQuestions').innerText = questions.length;
     getTagById('currentQuestionCount').innerText = currentQuestionNumber+1;
-    setupQuestion(currentQuestionNumber);
+}
+
+function setupQuestion() {
+    getTagById('question').innerHTML = questions[currentQuestionNumber]["question"];
+    getTagById('answer1').innerHTML = questions[currentQuestionNumber]["answer1"];
+    getTagById('answer2').innerHTML = questions[currentQuestionNumber]["answer2"];
+    getTagById('answer3').innerHTML = questions[currentQuestionNumber]["answer3"];
+    getTagById('answer4').innerHTML = questions[currentQuestionNumber]["answer4"];
 }
 
 function getTagById(id) {
     return document.getElementById(id);
-}
-
-function setupQuestion(currentQuestionNumber) {
-    document.getElementById('question').innerHTML = questions[currentQuestionNumber]["question"];
-    document.getElementById('answer1').innerHTML = questions[currentQuestionNumber]["answer1"];
-    document.getElementById('answer2').innerHTML = questions[currentQuestionNumber]["answer2"];
-    document.getElementById('answer3').innerHTML = questions[currentQuestionNumber]["answer3"];
-    document.getElementById('answer4').innerHTML = questions[currentQuestionNumber]["answer4"];
 }
 
 function addCssToElement(id, cssProperty) {
@@ -69,9 +73,45 @@ function removeCssFromElement(id, cssProperty) {
     getTagById(id).classList.remove(cssProperty);
 }
 
-function selectAnswer(id, cssProperty) {
-    if(getTagById(id).id.charAt(id.length - 1) == questions[currentQuestionNumber]["rightAnswer"]) {
-        addCssToElement(id,cssProperty);
+function selectAnswer(id) {
+    assessAnswer(id);
+    enableNextButton();
+    currentQuestionNumber++;
+    if(isGameFinished()) {
+        getTagById('endscreen').innerHTML = generateConclusionHTML(correctAnswerCounter);
+        showEndScreen();
+    }
+}
+
+function showEndScreen() {
+    removeCssFromElement('endscreen','d-none');
+    addCssToElement('quizcard', 'd-none');
+}
+
+function showGameScreen() {
+    removeCssFromElement('quizcard','d-none');
+    addCssToElement('endscreen', 'd-none');
+}
+
+function isGameFinished() {
+    if(currentQuestionNumber == questions.length) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function enableNextButton() {
+    document.getElementById('nextQuestion-Button').classList.remove('disabled');
+}
+
+function disableNextButton() {
+    document.getElementById('nextQuestion-Button').classList.add('disabled');
+}
+
+function assessAnswer(id) {
+    if(isRightAnswer(id)) {
+        addCssToElement(id,'correct');
         correctAnswerCounter++;
         disableAllAnswers();
     } else {
@@ -79,13 +119,14 @@ function selectAnswer(id, cssProperty) {
         disableAllAnswers();
         showRightAnswer();
     }
-    document.getElementById('nextQuestion-Button').classList.remove('disabled');
-    currentQuestionNumber++;
-    if(currentQuestionNumber == questions.length) {
-        getTagById('endscreen').innerHTML = generateConclusionHTML(correctAnswerCounter);
-        removeCssFromElement('endscreen','d-none');
-        addCssToElement('quizcard', 'd-none');
-    }
+}
+
+function isRightAnswer(id) {
+     if(getTagById(id).id.charAt(id.length - 1) == questions[currentQuestionNumber]["rightAnswer"]) {
+        return true;
+     } else {
+        return false;
+     }
 }
 
 function disableAllAnswers() {
@@ -115,13 +156,21 @@ function showRightAnswer() {
 }
 
 function showNextQuestion() {
-    if(currentQuestionNumber < questions.length) {
+    if(isGameRunning()) {
         removeAllWrongAndCorrectMarkers();
         init();
         enableAllAnswers();
-        document.getElementById('nextQuestion-Button').classList.add('disabled');
+        disableNextButton();
     } else {
         getTagById('quizcard').innerHTML = generateConclusionHTML(correctAnswerCounter);
+    }
+}
+
+function isGameRunning() {
+    if(currentQuestionNumber < questions.length) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -166,8 +215,7 @@ function generateConclusionHTML(correctAnswerCounter) {
 function restartQuiz() {
     currentQuestionNumber = 0;
     correctAnswerCounter = 0;
-    removeCssFromElement('quizcard','d-none');
-    addCssToElement('endscreen', 'd-none');
+    showGameScreen();
     removeAllWrongAndCorrectMarkers();
     enableAllAnswers();
     init();
